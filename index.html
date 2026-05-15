@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>叶梓坤 — PMC & 工具开发者</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=DM+Serif+Display:ital@0;1&family=Long+Cang&display=swap" rel="stylesheet"/>
+<style>
+/* Reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#f7f5f0;color:#1a1714;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+:root{
+  --nav-h:60px;
+  --max:900px;
+  --accent:#c5521e;
+  --border:#e0dbd4;
+  --card-bg:#ffffff;
+  --muted:#7a6f66;
+  --bg:#f7f5f0;
+  --bg-alt:#eeebe4;
+}
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--nav-h);
+  border-bottom:1px solid var(--border);
+  background:rgba(247,245,240,.96);
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;
+  padding:0 24px;height:100%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'DM Serif Display',serif;
+  font-size:17px;color:#1a1714;
+  text-decoration:none;
+}
+.nav-links{display:flex;gap:2px}
+.nav-links a{
+  text-decoration:none;color:var(--muted);font-size:13px;
+  padding:6px 12px;transition:color .15s;
+}
+.nav-links a:hover{color:#1a1714}
+.nav-links a.active{color:#1a1714}
+.nav-cta{
+  font-size:13px;font-weight:500;
+  background:#1a1714;color:#f7f5f0;
+  padding:7px 18px;border-radius:2px;
+  text-decoration:none;transition:opacity .15s;letter-spacing:.01em;
+}
+.nav-cta:hover{opacity:.75}
+
+/* Section scaffold */
+section{
+  max-width:var(--max);margin:0 auto;
+  padding:0 24px 100px;
+  padding-top:calc(var(--nav-h) + 80px);
+}
+section:first-of-type{padding-top:calc(var(--nav-h) + 40px)}
+.s-label{
+  display:inline-block;
+  font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:20px;
+}
+.s-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(28px,4vw,44px);font-weight:400;
+  line-height:1.1;color:#1a1714;
+  margin-bottom:14px;
+}
+.s-sub{font-size:15px;color:var(--muted);max-width:560px;line-height:1.85}
+
+/* Hero */
+#hero{
+  min-height:calc(100svh - var(--nav-h));
+  display:flex;align-items:center;
+  padding-top:calc(var(--nav-h) + 20px);
+}
+.hero-inner{
+  max-width:var(--max);margin:0 auto;padding:0 24px;
+  display:flex;flex-direction:column;gap:36px;width:100%;
+}
+.hero-badge{display:none}
+.hero-glow{display:none}
+.hero-h1{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(52px,9vw,100px);font-weight:400;
+  line-height:.93;
+  color:#1a1714;
+}
+.hero-h1 .grad{
+  font-style:italic;color:var(--accent);
+}
+.hero-desc{font-size:16px;color:var(--muted);max-width:460px;line-height:1.9}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#1a1714;color:#f7f5f0;font-size:13px;font-weight:500;
+  padding:11px 24px;border-radius:2px;text-decoration:none;
+  transition:opacity .15s;letter-spacing:.01em;
+}
+.btn-primary:hover{opacity:.75}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--muted);font-size:13px;
+  padding:11px 0;text-decoration:none;
+  border-bottom:1px solid var(--border);
+  transition:color .15s,border-color .15s;
+}
+.btn-ghost:hover{color:#1a1714;border-bottom-color:#1a1714}
+.hero-stats{display:none}
+.stat-item,.stat-num,.stat-lbl{display:none}
+
+/* Experience */
+.exp-card{
+  border-top:1px solid var(--border);
+  padding:36px 0;
+}
+.exp-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:16px;flex-wrap:wrap;margin-bottom:24px;
+}
+.exp-company{font-size:17px;font-weight:600;color:#1a1714;letter-spacing:-.01em}
+.exp-pos{font-size:13px;color:var(--accent);margin-top:5px;font-weight:500}
+.exp-date{
+  font-size:12px;color:var(--muted);white-space:nowrap;
+  padding-top:3px;letter-spacing:.02em;
+}
+.exp-phase{
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin:28px 0 14px;
+  display:flex;align-items:center;gap:14px;
+}
+.exp-phase::after{content:'';flex:1;height:1px;background:var(--border)}
+.exp-items{display:flex;flex-direction:column;gap:12px}
+.exp-item{
+  font-size:14px;color:#3d3630;
+  padding-left:18px;position:relative;line-height:1.8;
+}
+.exp-item::before{
+  content:'';position:absolute;left:4px;top:11px;
+  width:4px;height:4px;border-radius:50%;
+  background:var(--accent);
+}
+.exp-item strong{color:#1a1714;font-weight:600}
+.kpi-grid{display:flex;gap:0;flex-wrap:wrap;margin-top:32px;border:1px solid var(--border)}
+.kpi-pill{
+  flex:1;min-width:140px;
+  border-right:1px solid var(--border);
+  padding:18px 22px;
+}
+.kpi-pill:last-child{border-right:none}
+.kpi-pill .kv{font-size:24px;font-weight:700;color:#1a1714;line-height:1;font-variant-numeric:tabular-nums}
+.kpi-pill .kl{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}
+
+/* Projects */
+.proj-list{display:flex;flex-direction:column;gap:24px}
+.proj-card{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  display:grid;grid-template-columns:1fr 2fr;
+  box-shadow:0 2px 8px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);
+  transition:transform .28s cubic-bezier(.25,.46,.45,.94),box-shadow .28s ease,background .15s;
+  margin-bottom:20px;
+}
+.proj-card:hover{
+  background:#faf8f4;
+  transform:translateY(-4px);
+  box-shadow:0 6px 16px rgba(0,0,0,.07),0 16px 40px rgba(0,0,0,.10);
+}
+.proj-info{padding:44px;display:flex;flex-direction:column;justify-content:space-between;border-radius:18px 0 0 18px}
+.proj-num{
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:18px;
+}
+.proj-name{
+  font-family:'DM Serif Display',serif;
+  font-size:24px;font-weight:400;color:#1a1714;margin-bottom:14px;
+}
+.proj-desc{font-size:13.5px;color:var(--muted);line-height:1.85;margin-bottom:28px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px}
+.proj-tag{
+  font-size:11px;
+  border:1px solid var(--border);color:var(--muted);
+  padding:3px 10px;border-radius:2px;
+  background:var(--bg);
+}
+.proj-preview{
+  background:var(--bg-alt);border-left:1px solid var(--border);
+  min-height:340px;overflow:hidden;position:relative;
+  border-radius:0 18px 18px 0;
+}
+
+/* Skills */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--border);
+}
+@media(max-width:700px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
+.skill-card{
+  padding:28px 24px;
+  border-right:1px solid var(--border);
+}
+.skill-card:nth-child(4n){border-right:none}
+@media(max-width:700px){
+  .skill-card:nth-child(2n){border-right:none}
+  .skill-card:nth-child(4n){border-right:1px solid var(--border)}
+  .skill-card:nth-child(4n+2){border-right:none}
+}
+.skill-card:not(:nth-last-child(-n+4)){border-bottom:1px solid var(--border)}
+@media(max-width:700px){
+  .skill-card:not(:nth-last-child(-n+2)){border-bottom:1px solid var(--border)}
+}
+.skill-icon{display:none}
+.skill-num{
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;
+}
+.skill-name{font-size:13px;font-weight:600;color:#1a1714;margin-bottom:12px}
+.skill-items{display:flex;flex-direction:column;gap:5px}
+.skill-item{font-size:12.5px;color:var(--muted)}
+
+/* Education */
+.edu-card{
+  border-top:1px solid var(--border);
+  padding:36px 0;
+  display:grid;grid-template-columns:1fr auto;gap:24px;
+  align-items:start;
+}
+.edu-school{font-size:17px;font-weight:600;color:#1a1714}
+.edu-major{font-size:13px;color:var(--accent);margin-top:5px;font-weight:500}
+.edu-items{margin-top:18px;display:flex;flex-direction:column;gap:9px}
+.edu-item{font-size:13.5px;color:#3d3630;padding-left:18px;position:relative;line-height:1.75}
+.edu-item::before{content:'';position:absolute;left:4px;top:10px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+
+/* ── About 背景图区块 ── */
+#about-section-wrapper {
+  background: url('about-bg-new.png') 8% 37% / cover no-repeat;
+  overflow: hidden;   /* 按内容高度裁剪，不露大海 */
+  min-height: 1vh;   /* 保证树木充分展示 */
+}
+#about-section-wrapper section#about {
+  max-width: 100%;
+  margin: 0;
+  padding-left: 52vw;
+  padding-right: 4vw;
+  padding-top: calc(var(--nav-h) + 48px);
+  padding-bottom: 90px;
+}
+/* 三卡横排，圆角 */
+.about-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 28px;
+}
+.about-cards-row .about-info-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  position: relative;
+  z-index: 0;
+  transition: transform .22s cubic-bezier(.25,.46,.45,.94), box-shadow .22s ease;
+  cursor: default;
+}
+.about-cards-row .about-info-card:hover {
+  transform: scale(1.06) translateY(-4px);
+  box-shadow: 0 14px 36px rgba(0,0,0,.13), 0 4px 12px rgba(0,0,0,.07);
+  z-index: 10;
+  background: #fff;
+}
+/* 高亮短句 */
+.about-highlight {
+  color: var(--accent);
+  font-weight: 500;
+  font-style: italic;
+  border-bottom: 1.5px solid var(--accent);
+  padding-bottom: 1px;
+}
+/* ── Experience：左侧固定介绍 + 右侧可滚动卡片 ── */
+.exp-new-section { background: url('exp-bg.png') center/cover no-repeat; padding: 0; }
+.exp-new-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 72px 24px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.exp-intro { position: sticky; top: calc(var(--nav-h) + 40px); }
+.exp-intro-pre { font-size: 15px; color: var(--muted); margin-bottom: 14px; }
+.exp-intro-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(34px, 3.5vw, 54px);
+  font-weight: 400; color: #1a1714;
+  line-height: 1.1; margin-bottom: 22px;
+}
+.exp-title-hl {
+  background: var(--accent); color: #fff;
+  padding: 2px 10px; border-radius: 4px; display: inline-block;
+}
+.exp-intro-sub { font-size: 13.5px; color: var(--muted); line-height: 1.85; }
+.exp-scroll {
+  display: flex; flex-direction: column; gap: 16px;
+  max-height: 72vh; overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.15) transparent;
+}
+.exp-scroll::-webkit-scrollbar { width: 4px; }
+.exp-scroll::-webkit-scrollbar-track { background: transparent; }
+.exp-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,.18); border-radius: 2px; }
+.exp-new-card { background: #fff; border-radius: 16px; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+.enc-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 22px; border-bottom: 1px solid #e8edf2;
+}
+.enc-date { font-size: 14px; font-weight: 700; color: #1a1714; }
+.enc-icon {
+  width: 40px; height: 40px; border-radius: 50%; color: #fff;
+  font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; letter-spacing: .05em;
+}
+.enc-body { padding: 20px 22px 24px; }
+.enc-title { font-size: 17px; font-weight: 700; color: #1a1714; margin-bottom: 12px; }
+.enc-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.enc-bullets li {
+  font-size: 13px; color: #4a5568; line-height: 1.75;
+  padding-left: 16px; position: relative;
+}
+.enc-bullets li::before {
+  content: ''; position: absolute; left: 4px; top: 8px;
+  width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+}
+.enc-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.enc-kpi { background: #f8fafc; border-radius: 8px; padding: 10px 12px; }
+.enc-kpi-v { font-size: 19px; font-weight: 800; color: var(--accent); line-height: 1; }
+.enc-kpi-l { font-size: 11px; color: #64748b; margin-top: 3px; }
+@media(max-width: 900px){
+  #about-section-wrapper section#about { padding-left: 8vw; padding-right: 8vw; }
+  .about-cards-row { grid-template-columns: 1fr; }
+  .exp-new-inner { grid-template-columns: 1fr; }
+  .exp-intro { position: static; }
+  .exp-scroll { max-height: none; }
+}
+
+/* About cards */
+.about-info-card{
+  border:1px solid var(--border);padding:20px 22px;background:var(--card-bg);
+}
+
+/* Divider */
+.divider{width:100%;height:1px;background:var(--border);max-width:var(--max);margin:0 auto}
+
+/* Footer */
+footer{
+  border-top:1px solid var(--border);padding:32px 24px;
+  text-align:center;font-size:12px;color:var(--muted);letter-spacing:.01em;
+}
+
+/* Hero two-col */
+.hero-grid{
+  display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:center;
+  width:100%;
+}
+.hero-avatar-col{display:flex;flex-direction:column;align-items:center;gap:14px}
+.hero-avatar{
+  width:140px;height:140px;border-radius:50%;
+  object-fit:cover;border:3px solid var(--border);
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.hero-tag{
+  font-size:11px;padding:4px 12px;border-radius:2px;
+  border:1px solid var(--border);color:var(--muted);background:var(--card-bg);
+}
+.hero-right{display:flex;flex-direction:column;gap:20px}
+
+/* Chapter banner */
+.chapter-banner{
+  background:#1a1714;padding:18px 24px;
+  display:flex;align-items:center;gap:16px;
+}
+.chapter-banner .ch-num{
+  font-size:11px;font-weight:600;letter-spacing:.14em;
+  color:rgba(255,255,255,.45);text-transform:uppercase;
+}
+.chapter-banner .ch-title{
+  font-size:13px;font-weight:500;letter-spacing:.06em;
+  color:rgba(255,255,255,.9);text-transform:uppercase;
+}
+
+/* Philosophy */
+.phil-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.phil-card{
+  border:1px solid var(--border);padding:28px 24px;background:var(--card-bg);
+}
+.phil-num{font-size:11px;color:var(--muted);letter-spacing:.12em;margin-bottom:14px}
+.phil-title{font-size:14px;font-weight:600;color:#1a1714;margin-bottom:10px}
+.phil-desc{font-size:13px;color:var(--muted);line-height:1.85}
+
+/* Tools grid */
+.tools-section{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.tool-group{margin-bottom:28px}
+.tool-group-title{
+  font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;
+}
+.tool-list{display:flex;flex-wrap:wrap;gap:8px}
+.tool-pill{
+  font-size:12px;padding:6px 14px;border-radius:2px;
+  border:1px solid var(--border);color:#1a1714;background:var(--card-bg);
+  font-weight:500;
+}
+.tool-pill.highlight{border-color:var(--accent);color:var(--accent)}
+.trend-item{
+  font-size:13.5px;color:#3d3630;line-height:1.85;
+  padding-left:18px;position:relative;margin-bottom:10px;
+}
+.trend-item::before{
+  content:'';position:absolute;left:4px;top:11px;
+  width:4px;height:4px;border-radius:50%;background:var(--accent);
+}
+
+/* Animations */
+.fade-in{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* Decorative elements */
+.deco-dot{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:var(--accent);opacity:.18;pointer-events:none;
+}
+.deco-ring{
+  position:absolute;width:48px;height:48px;border-radius:50%;
+  border:1.5px solid var(--accent);opacity:.10;pointer-events:none;
+}
+.deco-cross{
+  position:absolute;width:14px;height:14px;opacity:.12;pointer-events:none;
+}
+.deco-cross::before,.deco-cross::after{
+  content:'';position:absolute;background:var(--accent);
+}
+.deco-cross::before{width:14px;height:1.5px;top:6px;left:0}
+.deco-cross::after{width:1.5px;height:14px;left:6px;top:0}
+.deco-line{
+  position:absolute;width:60px;height:1.5px;
+  background:var(--accent);opacity:.10;pointer-events:none;
+  transform:rotate(-25deg);
+}
+.deco-diamond{
+  position:absolute;width:10px;height:10px;
+  border:1.5px solid var(--accent);opacity:.12;
+  transform:rotate(45deg);pointer-events:none;
+}
+section{position:relative;overflow:visible}
+
+/* Story page */
+.story-section{
+  max-width:var(--max);margin:0 auto;
+  padding:calc(var(--nav-h) + 60px) 24px 80px;
+}
+.story-card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:16px;padding:48px 44px;position:relative;
+  overflow:hidden;
+}
+.story-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--accent),#f0a060,var(--accent));
+}
+.story-date{
+  font-size:11px;color:var(--muted);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:16px;
+}
+.story-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,3vw,32px);color:#1a1714;
+  margin-bottom:20px;line-height:1.3;
+}
+.story-body{
+  font-size:14px;color:#3d3630;line-height:2;margin-bottom:28px;
+}
+.story-img{
+  width:100%;border-radius:10px;border:1px solid var(--border);
+  margin-top:12px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .proj-card{grid-template-columns:1fr}
+  .proj-preview{min-height:260px;border-left:none;border-top:1px solid var(--border)}
+  .edu-card{grid-template-columns:1fr}
+  .nav-links a{padding:6px 10px;font-size:13px}
+  .kpi-pill{border-bottom:1px solid var(--border)}
+  .kpi-pill:last-child{border-bottom:none}
+  .hero-grid{grid-template-columns:1fr;text-align:center}
+  .hero-avatar-col{margin-bottom:8px}
+  .hero-right{align-items:center}
+  .hero-actions{justify-content:center}
+  .phil-grid{grid-template-columns:1fr}
+  .tools-section{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .nav-links .hide-sm{display:none}
+  .hero-h1{font-size:44px}
+  .proj-info{padding:28px}
+}
+
+/* ========================================
+   CYBERPUNK HERO — SPLIT LAYOUT
+   ======================================== */
+
+#hero.hero-cyber {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Dark nav while hero is visible */
+.hero-dark nav {
+  background: transparent;
+  border-bottom-color: transparent;
+  transition: background 0.4s, border-color 0.4s;
+}
+.hero-dark .nav-logo {
+  visibility: hidden;
+  transition: color 0.4s;
+}
+.hero-dark .nav-links a {
+  color: rgba(30,30,30,0.82);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: color 0.25s;
+  text-shadow: none;
+}
+.hero-dark .nav-links a:hover,
+.hero-dark .nav-links a.active { color: #111; }
+.hero-dark .nav-cta {
+  background: #cc1a00;
+  color: #fff;
+  border: none;
+  transition: background 0.2s;
+}
+.hero-dark .nav-cta:hover { background: #e81e00; opacity: 1; }
+
+/* ---- Left: Text content ---- */
+.hc-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: calc(var(--nav-h) + 52px) 60px 80px 72px;
+  z-index: 10;
+  position: relative;
+  background: transparent;
+}
+.hc-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #ff3a1a;
+  margin-bottom: 26px;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+}
+.hc-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 44px;
+}
+.hc-title-line {
+  font-size: clamp(52px, 7vw, 106px);
+  font-weight: 900;
+  line-height: 0.93;
+  color: #fff;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.75), 0 0 40px rgba(0,0,0,0.5);
+}
+.hc-title-line.spread {
+  letter-spacing: 0.55em;
+  font-size: clamp(44px, 6vw, 90px);
+}
+
+/* ---- Buttons ---- */
+.hc-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 44px;
+  flex-wrap: wrap;
+}
+.hc-btn-fill {
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  font-weight: 800;
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 15px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.hc-btn-fill:hover { background: #e81e00; color: #fff; transform: scale(1.03); }
+.hc-btn-ring {
+  display: inline-block;
+  background: transparent;
+  color: #fff;
+  font-weight: 800;
+  font-size: 11.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 13px 40px;
+  border-radius: 50px;
+  border: 2px solid rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.hc-btn-ring:hover { background: #fff; color: #000; border-color: #fff; transform: scale(1.03); }
+
+/* ---- Dots ---- */
+.hc-dots {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 36px;
+  align-items: center;
+}
+.hc-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2a2a2a;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.hc-dot.on { background: #cc2200; }
+
+/* ---- Social icons ---- */
+.hc-socials { display: flex; gap: 22px; align-items: center; }
+.hc-soc {
+  color: rgba(255,255,255,0.38);
+  text-decoration: none;
+  transition: color 0.22s;
+  display: flex;
+}
+.hc-soc:hover { color: #fff; }
+.hc-soc svg { width: 17px; height: 17px; fill: currentColor; }
+
+/* ---- Right: Character + Red Glow ---- */
+.hc-bg-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+/* Animated background image — tree on right, gentle sway */
+.hc-bg-img {
+  position: absolute;
+  inset: -1.5%;
+  background: url('hero-bg.png') 60% center / cover no-repeat;
+  transform-origin: 68% 85%;
+  animation: treeSway 7s ease-in-out infinite alternate;
+}
+@keyframes treeSway {
+  0%   { transform: rotate(-0.18deg) translateX(-1.5px); }
+  35%  { transform: rotate( 0.22deg) translateX( 2px);   }
+  65%  { transform: rotate(-0.12deg) translateX(-1px);   }
+  100% { transform: rotate( 0.18deg) translateX( 1.5px); }
+}
+/* Leaf canvas overlay — sits above bg, below text */
+.leaf-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+.hc-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% center;
+  z-index: 1;
+}
+.hc-right {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+.hc-right::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 200px; height: 100%;
+  background: transparent;
+  z-index: 5;
+  pointer-events: none;
+}
+.hc-glow {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 1;
+}
+.hc-char-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  z-index: 2;
+}
+.hc-tint { display: none; }
+.hc-char-slot {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hc-char-label {
+  font-size: 12px;
+  color: rgba(255,100,100,0.22);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 2;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  #hero.hero-cyber {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 45vw;
+  }
+  .hc-left { padding: calc(var(--nav-h) + 36px) 36px 32px; }
+  .hc-title-line { font-size: clamp(40px, 8.5vw, 80px); }
+  .hc-title-line.spread { font-size: clamp(34px, 7.5vw, 68px); }
+}
+@media (max-width: 560px) {
+  .hc-left { padding: calc(var(--nav-h) + 24px) 24px 28px; }
+  .hc-title-line { font-size: clamp(36px, 9.5vw, 60px); }
+  .hc-title-line.spread { font-size: clamp(28px, 8vw, 50px); }
+  .hc-btn-fill, .hc-btn-ring { padding: 13px 28px; font-size: 11px; }
+}
+
+/* ---- Supply Chain Project Previews ---- */
+.sc-flow-wrap{
+  width:100%;min-height:340px;
+  background:linear-gradient(145deg,#f0fdf4,#ecfdf5);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;padding:24px 20px;
+  font-family:'Inter',sans-serif;
+}
+.sc-flow-title{font-size:10px;color:#64748b;margin-bottom:24px;letter-spacing:.1em;text-transform:uppercase}
+.sc-steps{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+.sc-step{
+  background:#fff;border:1px solid #bbf7d0;border-radius:10px;
+  padding:14px 16px;text-align:center;min-width:76px;
+}
+.sc-step-icon{
+  width:28px;height:28px;border-radius:8px;background:#10b981;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:11px;font-weight:800;margin:0 auto 6px;
+}
+.sc-step-label{font-size:10px;font-weight:700;color:#1e293b}
+.sc-step-sub{font-size:8.5px;color:#64748b;margin-top:2px}
+.sc-arrow{color:#10b981;font-size:14px;font-weight:700}
+.sc-kpi-row{
+  display:flex;gap:16px;margin-top:24px;
+  border:1px solid #bbf7d0;border-radius:8px;overflow:hidden;background:#fff;
+}
+.sc-kpi{padding:12px 20px;text-align:center;border-right:1px solid #bbf7d0}
+.sc-kpi:last-child{border-right:none}
+.sc-kpi-val{font-size:18px;font-weight:800;color:#059669;line-height:1}
+.sc-kpi-lbl{font-size:8px;color:#94a3b8;margin-top:4px}
+
+/* ---- Inventory Management Preview ---- */
+.inv-wrap{
+  width:100%;min-height:340px;
+  background:linear-gradient(145deg,#faf5ff,#f5f3ff);
+  padding:20px;font-family:'Inter',sans-serif;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.inv-section-title{font-size:10px;color:#7c3aed;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.inv-scenes{display:flex;flex-direction:column;gap:7px}
+.inv-scene{
+  background:#fff;border:1px solid #ddd6fe;border-radius:8px;
+  padding:10px 14px;display:flex;align-items:center;gap:10px;
+}
+.inv-scene-num{
+  font-size:12px;font-weight:800;color:#7c3aed;
+  min-width:22px;height:22px;border-radius:50%;
+  background:#ede9fe;display:flex;align-items:center;justify-content:center;
+}
+.inv-scene-info{flex:1}
+.inv-scene-label{font-size:11px;font-weight:600;color:#1e293b}
+.inv-scene-desc{font-size:9px;color:#64748b;margin-top:2px}
+.inv-deps{margin-top:14px}
+.inv-deps-title{font-size:9px;color:#94a3b8;margin-bottom:7px;letter-spacing:.08em;text-transform:uppercase}
+.inv-dep-row{display:flex;flex-wrap:wrap;gap:5px}
+.inv-dep{font-size:9px;padding:3px 9px;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:4px;color:#5b21b6;font-weight:500}
+.inv-result{margin-top:12px;background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:9px 13px;font-size:10px;color:#5b21b6;font-weight:600}
+
+/* ---- Preview styles (unchanged) ---- */
+
+/* Preview: Schedule */
+.sched-wrap{
+  width:100%;height:100%;
+  display:flex;font-family:'Inter',sans-serif;font-size:11px;
+}
+.sched-sidebar{
+  width:160px;flex-shrink:0;
+  background:linear-gradient(160deg,rgba(248,250,252,.92),rgba(239,246,255,.85));
+  border-right:1px solid rgba(99,102,241,.15);
+  padding:14px 0;display:flex;flex-direction:column;
+}
+.sched-brand{
+  padding:0 14px 12px;
+  border-bottom:1px solid rgba(99,102,241,.12);margin-bottom:8px;
+}
+.sched-brand-icon{
+  width:28px;height:28px;border-radius:8px;
+  background:linear-gradient(135deg,#3b82f6,#6366f1);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:10px;font-weight:800;margin-bottom:6px;
+}
+.sched-brand-name{font-size:10px;font-weight:700;color:#1e293b}
+.sched-brand-sub{font-size:8px;color:#94a3b8}
+.sched-group-label{
+  font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:#94a3b8;padding:8px 14px 4px;
+}
+.sched-nav-item{
+  display:flex;align-items:center;gap:7px;
+  padding:6px 14px;font-size:10px;color:#64748b;
+  cursor:pointer;transition:all .15s;border-right:2px solid transparent;
+}
+.sched-nav-item:hover{background:rgba(59,130,246,.06);color:#1e293b}
+.sched-nav-item.active{
+  background:rgba(99,102,241,.1);color:#4f46e5;
+  border-right-color:#4f46e5;font-weight:600;
+}
+.sched-nav-icon{font-size:11px;opacity:.7}
+.sched-nav-item.active .sched-nav-icon{opacity:1}
+.sched-main{flex:1;background:#f8fafc;display:flex;flex-direction:column;overflow:hidden}
+.sched-topbar{
+  padding:8px 14px;background:#fff;
+  border-bottom:1px solid #e2e8f0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sched-topbar-title{font-size:11px;font-weight:700;color:#1e293b}
+.sched-topbar-btn{
+  font-size:9px;padding:3px 10px;border-radius:5px;
+  background:#eff6ff;color:#3b82f6;border:1px solid #bfdbfe;cursor:pointer;
+}
+.sched-content{flex:1;padding:12px;overflow:auto}
+.sched-panel{display:none}
+.sched-panel.active{display:block}
+.sched-table{width:100%;border-collapse:collapse;font-size:9px}
+.sched-table th{
+  background:#f1f5f9;padding:5px 7px;color:#64748b;
+  text-align:left;border:1px solid #e2e8f0;font-weight:600;
+}
+.sched-table td{padding:5px 7px;border:1px solid #e2e8f0;color:#334155}
+.sched-table tr:nth-child(even) td{background:#f8fafc}
+.sbadge{display:inline-block;padding:1px 6px;border-radius:4px;font-size:8px;font-weight:500}
+.sbadge.g{background:#dcfce7;color:#166534}
+.sbadge.y{background:#fef9c3;color:#854d0e}
+.sbadge.r{background:#fee2e2;color:#991b1b}
+.sbadge.b{background:#eff6ff;color:#1d4ed8}
+.sched-chart-bar{display:flex;align-items:flex-end;gap:3px;height:40px;padding:0 2px}
+.sbar{flex:1;border-radius:2px 2px 0 0;background:linear-gradient(180deg,#6366f1,#3b82f6);opacity:.8}
+
+/* Preview: Factory Monitor */
+.mon-wrap{
+  width:100%;height:100%;display:flex;
+  background:#eef2f9;font-family:'Inter',sans-serif;font-size:11px;
+}
+.mon-sidebar{
+  width:150px;flex-shrink:0;
+  background:#f6f8fc;border-right:1px solid #e2e8f0;
+  padding:12px 0;display:flex;flex-direction:column;
+}
+.mon-brand{padding:0 14px 10px;border-bottom:1px solid #e2e8f0;margin-bottom:6px}
+.mon-brand-name{font-size:10px;font-weight:700;color:#1e293b}
+.mon-brand-sub{font-size:8px;color:#94a3b8;margin-top:1px}
+.mon-group{font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;padding:8px 14px 4px}
+.mon-nav-item{
+  display:flex;align-items:center;gap:7px;
+  padding:6px 14px;font-size:10px;color:#64748b;
+  cursor:pointer;transition:all .15s;
+  border-right:2px solid transparent;
+}
+.mon-nav-item:hover{background:rgba(74,108,247,.04);color:#1e293b}
+.mon-nav-item.active{background:#e8edff;color:#4a6cf7;border-right-color:#4a6cf7;font-weight:600}
+.mon-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.mon-topbar{
+  padding:8px 14px;background:#fff;
+  border-bottom:1px solid #e2e8f0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.mon-topbar-title{font-size:11px;font-weight:700;color:#1e293b}
+.mon-topbar-time{font-size:9px;color:#94a3b8}
+.mon-content{flex:1;padding:10px;overflow:auto}
+.mon-panel{display:none}
+.mon-panel.active{display:block}
+.mon-kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.mon-kpi-card{
+  background:#fff;border:1px solid #e2e8f0;border-radius:6px;
+  padding:8px 10px;text-align:center;
+}
+.mon-kpi-val{font-size:15px;font-weight:800;color:#1e293b;line-height:1}
+.mon-kpi-val.ok{color:#10b981}
+.mon-kpi-val.warn{color:#d97706}
+.mon-kpi-label{font-size:8px;color:#94a3b8;margin-top:2px}
+.mon-chart{display:flex;align-items:flex-end;gap:2px;height:36px;margin-top:4px}
+.mon-bar{flex:1;border-radius:2px 2px 0 0;background:#4a6cf7;opacity:.7}
+.mon-table{width:100%;border-collapse:collapse;font-size:9px}
+.mon-table th{background:#f8fafc;padding:4px 7px;color:#64748b;border:1px solid #e2e8f0;text-align:left;font-weight:600}
+.mon-table td{padding:4px 7px;border:1px solid #e2e8f0;color:#1e293b}
+.mon-status{display:inline-block;width:5px;height:5px;border-radius:50%;margin-right:4px}
+.mon-status.ok{background:#10b981}
+.mon-status.warn{background:#f59e0b}
+.fhi-score{font-size:36px;font-weight:800;color:#4a6cf7;line-height:1;margin-bottom:4px}
+.fhi-label{font-size:9px;color:#94a3b8}
+.fhi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.fhi-item{background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:6px 8px}
+.fhi-item-val{font-size:16px;font-weight:800;color:#4a6cf7}
+.fhi-item-lbl{font-size:8px;color:#94a3b8}
+
+/* Preview: QuadrantTodo */
+.qt-wrap{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#1F4336,#2D5A45);
+  display:flex;align-items:stretch;
+  font-family:'Inter',sans-serif;font-size:11px;
+  padding:10px;gap:6px;
+}
+.qt-sidebar{
+  width:48px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;
+  padding:10px 0;gap:6px;
+}
+.qt-avatar{
+  width:30px;height:30px;border-radius:50%;
+  background:#4CAF79;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:#fff;margin-bottom:6px;
+}
+.qt-icon-btn{
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.4);font-size:14px;cursor:pointer;
+  transition:all .15s;
+}
+.qt-icon-btn:hover,.qt-icon-btn.active{
+  background:rgba(240,242,245,.15);color:#fff;
+}
+.qt-inner{
+  flex:1;background:#F0F2F5;border-radius:16px;
+  padding:10px;display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.qt-panel{display:none;height:100%}
+.qt-panel.active{display:flex;flex-direction:column}
+.qt-board{
+  flex:1;display:grid;grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;gap:6px;
+}
+.qt-quadrant{
+  border-radius:10px;padding:8px;overflow:hidden;
+  background:#fff;display:flex;flex-direction:column;
+}
+.qt-q-header{
+  display:flex;align-items:center;gap:5px;margin-bottom:6px;
+}
+.qt-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.qt-q-title{font-size:9px;font-weight:700;color:#1a2b33}
+.qt-item{
+  font-size:8.5px;color:#4B6B7A;padding:4px 6px;
+  border-radius:5px;background:#f7f8fa;margin-bottom:3px;
+  border-left:2px solid transparent;
+}
+.qt-cal{flex:1;background:#fff;border-radius:12px;padding:10px;overflow:hidden}
+.qt-cal-title{font-size:10px;font-weight:700;color:#1a2b33;margin-bottom:8px}
+.qt-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.qt-cal-day{font-size:8px;text-align:center;padding:3px 2px;border-radius:4px;color:#6B8A99}
+.qt-cal-day.hd{font-weight:700;color:#94a3b8}
+.qt-cal-day.today{background:#4CAF79;color:#fff;font-weight:700}
+.qt-cal-day.has{background:rgba(76,175,121,.12);color:#2e7d5b}
+.qt-done-list{flex:1;overflow:hidden}
+.qt-done-item{
+  font-size:9px;color:#6B8A99;padding:5px 8px;
+  border-bottom:1px solid #eef2f4;
+  display:flex;align-items:center;gap:6px;
+}
+.qt-done-check{color:#4CAF79;font-size:10px}
+.qt-done-text{flex:1;text-decoration:line-through;color:#9AB3BF}
+.qt-done-date{font-size:8px;color:#c4d0d5}
+/* =====================
+   SPLASH INTRO SCREEN
+   ===================== */
+#splash{
+  position:fixed;inset:0;z-index:9999;
+  background:transparent;
+  display:flex;align-items:center;justify-content:center;
+}
+#splash-mask{
+  position:absolute;inset:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+#splash-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:48px;
+  opacity:0;filter:blur(24px);
+  transition:opacity 1.5s ease,filter 1.5s ease;
+  pointer-events:none;
+}
+#splash-content.splash-visible{opacity:1;filter:blur(0);pointer-events:all;}
+#splash-name{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(80px,14vw,150px);
+  font-weight:400;font-style:italic;
+  color:#fff;letter-spacing:-0.01em;line-height:1;
+  user-select:none;
+  position:relative;z-index:1;
+}
+#splash-name-group{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+#splash-name-zh{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Long Cang',cursive;
+  font-size:clamp(28px,4.5vw,48px);
+  font-weight:400;font-style:normal;
+  color:var(--accent);letter-spacing:0.06em;line-height:1;
+  user-select:none;
+  -webkit-mask-image:radial-gradient(circle 0px at 50% 50%,black,transparent);
+  mask-image:radial-gradient(circle 0px at 50% 50%,black,transparent);
+  z-index:0;
+}
+#splash-welcome{
+  background:transparent;
+  border:1.5px solid rgba(255,255,255,0.55);
+  color:#fff;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;
+  padding:14px 48px;border-radius:50px;
+  cursor:pointer;display:flex;align-items:center;
+  overflow:hidden;gap:0;
+  transition:border-color 0.25s;outline:none;
+}
+#splash-welcome:hover{border-color:rgba(255,255,255,0.9);}
+.wl{display:inline-block;will-change:transform;}
+@keyframes wlRoll{
+  0%  {transform:translateY(0);}
+  42% {transform:translateY(-4em);}
+  43% {transform:translateY(4em);}
+  100%{transform:translateY(0);}
+}
+.wl.rolling{animation:wlRoll 0.52s ease-in-out forwards;}
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <canvas id="splash-mask"></canvas>
+  <div id="splash-content">
+    <div id="splash-name-group">
+      <h1 id="splash-name-zh">叶梓坤</h1>
+      <h1 id="splash-name">Kain</h1>
+    </div>
+    <button id="splash-welcome" type="button">
+      <span class="wl">W</span><span class="wl">E</span><span class="wl">L</span><span class="wl">C</span><span class="wl">O</span><span class="wl">M</span><span class="wl">E</span>
+    </button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">叶梓坤</a>
+    <div class="nav-links">
+      <a href="#about" class="hide-sm">关于</a>
+      <a href="#experience">经历</a>
+      <a href="#projects">项目</a>
+      <a href="#philosophy" class="hide-sm">主张</a>
+      <a href="#tools" class="hide-sm">工具</a>
+      <a href="#skills" class="hide-sm">技能</a>
+    </div>
+    <a href="#" class="nav-cta" id="contact-btn">联系我</a>
+  </div>
+</nav>
+
+<!-- HERO (Full-image / Video Background) -->
+<section id="hero" class="hero-cyber">
+  <div class="hc-bg-wrap">
+    <div class="hc-bg-img"></div>
+    <video class="hc-bg-video" autoplay muted loop playsinline>
+      <!-- <source src="hero-video.mp4" type="video/mp4"> -->
+    </video>
+  </div>
+  <canvas class="leaf-canvas" id="leaf-canvas"></canvas>
+  <div class="hc-left" id="hc-left">
+    <p class="hc-label">PMC &amp; Tool Developer ·</p>
+    <div class="hc-title">
+      <span class="hc-title-line spread">叶 梓 坤</span>
+      <span class="hc-title-line">供应链PMC</span>
+      <span class="hc-title-line">AI工具开发</span>
+    </div>
+    <div class="hc-actions">
+      <a href="#projects"   class="hc-btn-fill">查看项目</a>
+      <a href="#experience" class="hc-btn-fill">工作经历</a>
+    </div>
+    <div class="hc-dots">
+      <span class="hc-dot on"></span>
+      <span class="hc-dot"></span>
+      <span class="hc-dot"></span>
+      <span class="hc-dot"></span>
+      <span class="hc-dot"></span>
+    </div>
+  </div>
+  <div class="hc-right"><div class="hc-glow"></div><div class="hc-tint"></div></div>
+</section>
+
+<div id="about-section-wrapper">
+<div class="chapter-banner"><span class="ch-num">01</span><span class="ch-title">About</span></div>
+    <section id="about" class="fade-in">
+      <span class="deco-ring" style="top:20px;right:30px"></span>
+      <span class="deco-dot" style="top:60px;right:80px"></span>
+      <span class="deco-cross" style="bottom:40px;right:50px"></span>
+      <div class="s-label">个人简介</div>
+      <h2 class="s-title">供应链从业者&amp;工具建造者</h2>
+      <p class="s-sub" style="margin-top:14px">
+        从学生转为职场人的第一年，我在物控岗位建立了流程本质分析的思维习惯；
+        转做生产计划后，面对每周大幅波动的排期工作，开始用AI工具解决重复问题。
+        现在我相信：<span class="about-highlight">好的工具能把时间还给真正需要判断的事情</span>。
+      </p>
+      <div class="about-cards-row">
+        <div class="about-info-card">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase">当前阶段</div>
+          <div style="font-size:14px;color:#1a1714">物控 <span style="color:var(--muted)">→</span> 生产计划 <span style="color:var(--muted)">→</span> <span style="color:var(--accent);font-weight:500">PMC+AI</span></div>
+        </div>
+        <div class="about-info-card">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:10px;letter-spacing:.08em;text-transform:uppercase">使用工具</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="proj-tag">Claude Code</span>
+            <span class="proj-tag">Cursor</span>
+            <span class="proj-tag">VSCode</span>
+            <span class="proj-tag">即梦</span>
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">Excel</span>
+          </div>
+        </div>
+        <div class="about-info-card">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase">目标方向</div>
+          <div style="font-size:14px;color:#1a1714">PMC / 主计划 / 采购</div>
+        </div>
+      </div>
+    </section>
+</div>
+
+<div class="chapter-banner"><span class="ch-num">02</span><span class="ch-title">Experience</span></div>
+<section id="experience" class="exp-new-section fade-in">
+  <div class="exp-new-inner">
+
+    <!-- 左栏：吸顶介绍 -->
+    <div class="exp-intro">
+      <span class="deco-dot" style="position:absolute;top:10px;left:-20px"></span>
+      <span class="deco-line" style="position:absolute;bottom:30px;left:-10px"></span>
+      <h2 class="exp-intro-title"><span class="exp-title-hl">工作经历</span></h2>
+      <p class="exp-intro-sub">
+        广州视源电子科技股份有限公司<br/>
+        供应链 PMC · 2024.05 — 2026.06
+      </p>
+    </div>
+
+    <!-- 右栏：可手动滚动的经历卡片 -->
+    <div class="exp-scroll">
+
+      <!-- PC 阶段 -->
+      <div class="exp-new-card">
+        <div class="enc-header">
+          <span class="enc-date">2025.08 — 2026.06</span>
+          <div class="enc-icon" style="background:var(--accent)">PC</div>
+        </div>
+        <div class="enc-body">
+          <div class="enc-title">生产计划（PC）</div>
+          <ul class="enc-bullets">
+            <li>建立"商务需求 + 物料报警 + 产能数据"三位一体的N+1周度计划体系，覆盖 8类核心产品、303类机型</li>
+            <li>计划达成率 <strong>99%</strong>，拉通插单评审、返工排期与资源冲突协调，动态调整生产计划</li>
+            <li>累计减少停线损失超 <strong>168H</strong>，降低成品积压金额超 <strong>100万元</strong></li>
+            <li>每日跟踪工厂进度，输出交货/物料风险预警报告 12份，延误出货案例为 <strong>0</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- MC 阶段 -->
+      <div class="exp-new-card">
+        <div class="enc-header">
+          <span class="enc-date">2024.05 — 2025.07</span>
+          <div class="enc-icon" style="background:#4a6cf7">MC</div>
+        </div>
+        <div class="enc-body">
+          <div class="enc-title">物料控制（MC）</div>
+          <ul class="enc-bullets">
+            <li>制定辅料备货计划，执行齐套检查，管控账实一致率 ≥<strong>99%</strong></li>
+            <li>每日双时点监控 IQC 入库及时率，4H及时率从 <strong>84%</strong> 提升至 <strong>93.9%</strong>，转为稳定达标</li>
+            <li>推动辅料48H、不良品24H内下账；建立月度抽盘机制（6品类/30~50颗）</li>
+            <li>年终盘点账实一致率 <strong>100%</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 越南产能回国统筹 -->
+      <div class="exp-new-card">
+        <div class="enc-header">
+          <span class="enc-date">2025.07 — 2025.08</span>
+          <div class="enc-icon" style="background:#0891b2">统</div>
+        </div>
+        <div class="enc-body">
+          <div class="enc-title">越南产能回国统筹</div>
+          <ul class="enc-bullets">
+            <li>测算多品类物料仓储承载力（栈板尺寸与面积占用），制定分批到港入库方案</li>
+            <li>协调物流 / 采购 / 工厂三方落地执行，入库周期缩短至 <strong>半天</strong></li>
+            <li>产能转移达成率 <strong>100%</strong>，锻炼全局统筹意识与跨部门拉通能力</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 库存管理系统专项 -->
+      <div class="exp-new-card">
+        <div class="enc-header">
+          <span class="enc-date">2025 — 2026</span>
+          <div class="enc-icon" style="background:#7c3aed">项</div>
+        </div>
+        <div class="enc-body">
+          <div class="enc-title">库存管理系统专项</div>
+          <ul class="enc-bullets">
+            <li>梳理MC三大核心业务场景：批量退货、不良品处理、账实核对</li>
+            <li>跨部门联动采购、商务、品质、PE 及工厂，主导 IT 系统开发落地</li>
+            <li>系统上线后工作效率提升 <strong>30%</strong>，规避人为操作失误</li>
+            <li>实现关键流程全自动化闭环</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- KPI 汇总 -->
+      <div class="exp-new-card">
+        <div class="enc-header">
+          <span class="enc-date">核心成果</span>
+          <div class="enc-icon" style="background:#10b981">★</div>
+        </div>
+        <div class="enc-body">
+          <div class="enc-title">关键KPI</div>
+          <div class="enc-kpis">
+            <div class="enc-kpi"><div class="enc-kpi-v">99%</div><div class="enc-kpi-l">计划达成率</div></div>
+            <div class="enc-kpi"><div class="enc-kpi-v">168H</div><div class="enc-kpi-l">减少停线损失</div></div>
+            <div class="enc-kpi"><div class="enc-kpi-v">100万+</div><div class="enc-kpi-l">降低积压金额</div></div>
+            <div class="enc-kpi"><div class="enc-kpi-v">0</div><div class="enc-kpi-l">延误出货案例</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="chapter-banner"><span class="ch-num">03</span><span class="ch-title">Projects</span></div>
+<section id="projects" class="fade-in">
+  <span class="deco-diamond" style="top:30px;right:60px"></span>
+  <span class="deco-line" style="top:50px;left:10px"></span>
+  <span class="deco-dot" style="bottom:60px;left:40px"></span>
+  <div class="s-label">Projects</div>
+  <h2 class="s-title" style="margin-bottom:8px">自主通过AI完成个人提效项目</h2>
+  <p class="s-sub" style="margin-bottom:48px">用 Vibe Coding 方式开发的生产工具，覆盖排期管理、数据监控、效率提升等场景，均已落地使用。</p>
+
+  <div class="proj-list">
+
+    <!-- 项目1：排期辅助 -->
+    <div class="proj-card fade-in">
+      <div class="proj-info">
+        <div>
+          <div class="proj-num">01 · 2026</div>
+          <div class="proj-name">排期辅助系统</div>
+          <div class="proj-desc">
+            覆盖生产排期全流程8个模块：新单筛选、分周回填、负荷预测、排线模拟、差异料核对、排期校验等，数据本地处理。
+          </div>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">React</span>
+          <span class="proj-tag">TypeScript</span>
+          <span class="proj-tag">SheetJS</span>
+          <span class="proj-tag">Web Worker</span>
+          <span class="proj-tag">Vite</span>
+        </div>
+      </div>
+      <div class="proj-preview">
+        <div class="sched-wrap" id="sched-preview">
+          <div class="sched-sidebar">
+            <div class="sched-brand">
+              <div class="sched-brand-icon">排</div>
+              <div class="sched-brand-name">排期辅助</div>
+              <div class="sched-brand-sub">生产排期全流程系统</div>
+            </div>
+            <div class="sched-group-label">前置准备</div>
+            <div class="sched-nav-item active" data-pj="sched" data-panel="sn">
+              <span class="sched-nav-icon">⊞</span>筛选新单
+            </div>
+            <div class="sched-nav-item" data-pj="sched" data-panel="wf">
+              <span class="sched-nav-icon">↻</span>分周回填
+            </div>
+            <div class="sched-nav-item" data-pj="sched" data-panel="pp">
+              <span class="sched-nav-icon">↗</span>预测规划
+            </div>
+            <div class="sched-group-label">过程辅助</div>
+            <div class="sched-nav-item" data-pj="sched" data-panel="ls">
+              <span class="sched-nav-icon">⠿</span>排线模拟
+            </div>
+            <div class="sched-nav-item" data-pj="sched" data-panel="mc">
+              <span class="sched-nav-icon">⇄</span>差异料核对
+            </div>
+            <div class="sched-group-label">事后检查</div>
+            <div class="sched-nav-item" data-pj="sched" data-panel="sv">
+              <span class="sched-nav-icon">✓</span>排期校验
+            </div>
+          </div>
+          <div class="sched-main">
+            <div class="sched-topbar">
+              <span class="sched-topbar-title" id="sched-title">筛选新单</span>
+              <button class="sched-topbar-btn" id="sched-dl-btn">↓ 下载结果</button>
+            </div>
+            <div class="sched-content">
+              <div class="sched-panel active" id="sched-sn">
+                <table class="sched-table">
+                  <thead><tr><th>生产批次</th><th>产品型号</th><th>销售型号</th><th>类型</th></tr></thead>
+                  <tbody>
+                    <tr><td>XDW-SRCBU2602001401</td><td>EDB-65AB10</td><td>RD-65ABA</td><td><span class="sbadge g">全新单</span></td></tr>
+                    <tr><td>XDW-SZCBU2602018102</td><td>EDB-75CD20</td><td>RD-75CDB</td><td><span class="sbadge g">全新单</span></td></tr>
+                    <tr><td>XDW-SRCBU2602018001</td><td>EAB-55XS10</td><td>RD-55XSA</td><td><span class="sbadge y">待确认新单</span></td></tr>
+                    <tr><td>XDW-XBCBU2602022201</td><td>EDB-86EF30</td><td>RD-86EFC</td><td><span class="sbadge g">全新单</span></td></tr>
+                    <tr><td>XDW-SRCBU2602031001</td><td>EDB-98GH10</td><td>RD-98GHD</td><td><span class="sbadge y">待确认新单</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="sched-panel" id="sched-wf">
+                <table class="sched-table">
+                  <thead><tr><th>批次号</th><th>机型</th><th>分周（只读）</th><th>本周分周</th></tr></thead>
+                  <tbody>
+                    <tr><td>XDW-SR2602014</td><td>EDB-65AB</td><td>5月200</td><td><span style="color:#4f46e5;font-weight:600">5月200W2</span></td></tr>
+                    <tr><td>XDW-SZ2602018</td><td>EDB-75CD</td><td>5月150</td><td><span style="color:#4f46e5;font-weight:600">5月150W3</span></td></tr>
+                    <tr><td>XDW-XB2602022</td><td>EDB-86EF</td><td>5月100</td><td><span style="color:#f59e0b;font-weight:600">★ 5月80W2</span></td></tr>
+                    <tr><td>XDW-SR2602031</td><td>EAB-55XS</td><td>—</td><td><span style="color:#94a3b8">待定 80</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="sched-panel" id="sched-pp">
+                <div style="font-size:9px;color:#64748b;margin-bottom:6px;font-weight:600">周边负荷率（%） · 5月</div>
+                <table class="sched-table">
+                  <thead><tr><th>线体</th><th>5月</th><th>6月</th><th>7月</th><th>8月</th></tr></thead>
+                  <tbody>
+                    <tr><td>传屏线1</td><td><span style="color:#ef4444;font-weight:700">108%</span></td><td>94%</td><td>87%</td><td>76%</td></tr>
+                    <tr><td>传屏线2</td><td>88%</td><td><span style="color:#f59e0b;font-weight:700">96%</span></td><td>82%</td><td>79%</td></tr>
+                    <tr><td>展台线1</td><td>72%</td><td>68%</td><td>75%</td><td>81%</td></tr>
+                    <tr><td>录播线1</td><td>55%</td><td>61%</td><td>59%</td><td>63%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="sched-panel" id="sched-ls">
+                <table class="sched-table">
+                  <thead><tr><th>批次</th><th>线体</th><th>UPH</th><th>05/06</th><th>05/07</th><th>05/08</th><th>剩余</th></tr></thead>
+                  <tbody>
+                    <tr><td>SR2602014</td><td>传屏线1</td><td>80</td><td>80</td><td>120</td><td>—</td><td>0</td></tr>
+                    <tr><td>SZ2602018</td><td>传屏线2</td><td>65</td><td>—</td><td>65</td><td>85</td><td>0</td></tr>
+                    <tr><td>XB2602022</td><td>展台线1</td><td>90</td><td>90</td><td>90</td><td>70</td><td>0</td></tr>
+                    <tr><td>SR2602031</td><td>传屏线1</td><td>80</td><td>—</td><td>—</td><td>80</td><td>40</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="sched-panel" id="sched-mc">
+                <table class="sched-table">
+                  <thead><tr><th>物料编码</th><th>物料名称</th><th>旧数量</th><th>新数量</th><th>差异</th></tr></thead>
+                  <tbody>
+                    <tr><td>004.067.0058606</td><td>钢化玻璃盖板</td><td>200</td><td>240</td><td><span class="sbadge y">数量变化</span></td></tr>
+                    <tr><td>004.044.0064169</td><td>散热铜箔贴</td><td>—</td><td>50</td><td><span class="sbadge g">新增</span></td></tr>
+                    <tr><td>004.012.0031025</td><td>蓝牙天线</td><td>100</td><td>—</td><td><span class="sbadge r">删除</span></td></tr>
+                    <tr><td>004.055.0071203</td><td>转接板卡</td><td>80</td><td>80</td><td><span class="sbadge b">组织差异</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="sched-panel" id="sched-sv">
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <div style="background:#fee2e2;border:1px solid #fecaca;border-radius:5px;padding:5px 8px;font-size:9px;color:#991b1b">
+                    <strong>致命问题</strong> · 传屏线1 第W2周利用率 108%，超载
+                  </div>
+                  <div style="background:#fef9c3;border:1px solid #fde68a;border-radius:5px;padding:5px 8px;font-size:9px;color:#854d0e">
+                    <strong>高风险</strong> · XDW-SR2602031 齐套时间 - 下采购时间 = 21天，低于28天标准
+                  </div>
+                  <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:5px;padding:5px 8px;font-size:9px;color:#1d4ed8">
+                    <strong>优化建议</strong> · 录播线1 第W3周利用率 42%，产能闲置，建议前移批次
+                  </div>
+                  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:5px;padding:5px 8px;font-size:9px;color:#166534">
+                    <strong>正常</strong> · 展台线1、音频线1 所有字段完整，时间逻辑正确
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 项目2：加工厂监控 -->
+    <div class="proj-card fade-in" style="direction:rtl">
+      <div class="proj-info" style="direction:ltr">
+        <div>
+          <div class="proj-num">02 · 2026</div>
+          <div class="proj-name">加工厂运行监控系统</div>
+          <div class="proj-desc">
+            整合7大KPI看板，引入FHI工厂健康评分自动诊断异常根因，实现"一屏看工厂"。支持本地与内网数仓双模式。
+          </div>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Chart.js</span>
+          <span class="proj-tag">StarRocks</span>
+          <span class="proj-tag">MCP</span>
+          <span class="proj-tag">FHI评分</span>
+        </div>
+      </div>
+      <div class="proj-preview" style="direction:ltr">
+        <div class="mon-wrap" id="mon-preview">
+          <div class="mon-sidebar">
+            <div class="mon-brand">
+              <div class="mon-brand-name">加工厂监控</div>
+              <div class="mon-brand-sub">XDW · 芯电威</div>
+            </div>
+            <div class="mon-group">KPI考核</div>
+            <div class="mon-nav-item active" data-pj="mon" data-panel="promise">📦 订单承诺</div>
+            <div class="mon-nav-item" data-pj="mon" data-panel="wip">⏱ 在制周期</div>
+            <div class="mon-nav-item" data-pj="mon" data-panel="clear">✂ 清尾分析</div>
+            <div class="mon-nav-item" data-pj="mon" data-panel="iqc">📥 检验入库</div>
+            <div class="mon-group">AI诊断</div>
+            <div class="mon-nav-item" data-pj="mon" data-panel="fhi">🧬 FHI评分</div>
+          </div>
+          <div class="mon-main">
+            <div class="mon-topbar">
+              <span class="mon-topbar-title" id="mon-title">订单承诺达成率</span>
+              <span class="mon-topbar-time">更新于 05/04 08:30</span>
+            </div>
+            <div class="mon-content">
+              <div class="mon-panel active" id="mon-promise">
+                <div class="mon-kpi-row">
+                  <div class="mon-kpi-card"><div class="mon-kpi-val ok">96.2%</div><div class="mon-kpi-label">当月达成率</div></div>
+                  <div class="mon-kpi-card"><div class="mon-kpi-val">48</div><div class="mon-kpi-label">考核批次总数</div></div>
+                  <div class="mon-kpi-card"><div class="mon-kpi-val warn">2</div><div class="mon-kpi-label">不达标批次</div></div>
+                </div>
+                <div style="font-size:9px;color:#64748b;margin-bottom:4px">近7天每日达成趋势</div>
+                <div class="mon-chart">
+                  <div class="mon-bar" style="height:80%"></div>
+                  <div class="mon-bar" style="height:95%"></div>
+                  <div class="mon-bar" style="height:88%"></div>
+                  <div class="mon-bar" style="height:100%"></div>
+                  <div class="mon-bar" style="height:72%"></div>
+                  <div class="mon-bar" style="height:90%"></div>
+                  <div class="mon-bar" style="height:96%"></div>
+                </div>
+              </div>
+              <div class="mon-panel" id="mon-wip">
+                <div class="mon-kpi-row">
+                  <div class="mon-kpi-card"><div class="mon-kpi-val ok">2.8天</div><div class="mon-kpi-label">加权平均周期</div></div>
+                  <div class="mon-kpi-card"><div class="mon-kpi-val">3天</div><div class="mon-kpi-label">目标上限</div></div>
+                  <div class="mon-kpi-card"><div class="mon-kpi-val ok">↓0.3</div><div class="mon-kpi-label">环比改善</div></div>
+                </div>
+                <div style="font-size:9px;color:#64748b;margin-bottom:4px">近12月周期趋势（天）</div>
+                <div class="mon-chart">
+                  <div class="mon-bar" style="height:90%;background:#f59e0b"></div>
+                  <div class="mon-bar" style="height:85%;background:#f59e0b"></div>
+                  <div class="mon-bar" style="height:78%;background:#10b981"></div>
+                  <div class="mon-bar" style="height:75%;background:#10b981"></div>
+                  <div class="mon-bar" style="height:70%;background:#10b981"></div>
+                  <div class="mon-bar" style="height:68%;background:#10b981"></div>
+                  <div class="mon-bar" style="height:72%;background:#10b981"></div>
+                </div>
+              </div>
+              <div class="mon-panel" id="mon-clear">
+                <div class="mon-kpi-row">
+                  <div class="mon-kpi-card"><div class="mon-kpi-val ok">95.4%</div><div class="mon-kpi-label">3天达成率</div></div>
+                  <div class="mon-kpi-card"><div class="mon-kpi-val warn">88.2%</div><div class="mon-kpi-label">2天达成率</div></div>
+                  <div class="mon-kpi-card"><div class="mon-kpi-val warn">4</div><div class="mon-kpi-label">未清尾批次</div></div>
+                </div>
+                <table class="mon-table">
+                  <thead><tr><th>批次</th><th>产品</th><th>待补数量</th><th>状态</th></tr></thead>
+                  <tbody>
+                    <tr><td>SR2602008</td><td>EDB-65AB</td><td>12台</td><td><span class="sbadge r">欠料中</span></td></tr>
+                    <tr><td>SZ2602015</td><td>EDB-75CD</td><td>8台</td><td><span class="sbadge y">待入库</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mon-panel" id="mon-iqc">
+                <div class="mon-kpi-row">
+                  <div class="mon-kpi-card"><div class="mon-kpi-val ok">93.9%</div><div class="mon-kpi-label">4H及时率</div></div>
+                  <div class="mon-kpi-card"><div class="mon-kpi-val ok">99.7%</div><div class="mon-kpi-label">24H及时率</div></div>
+                  <div class="mon-kpi-card"><div class="mon-kpi-val warn">18</div><div class="mon-kpi-label">今日超时单</div></div>
+                </div>
+                <div style="font-size:9px;color:#64748b;margin-bottom:4px">今日紧急物料入库状态</div>
+                <table class="mon-table">
+                  <thead><tr><th>料号</th><th>待检等级</th><th>等待时长</th><th>状态</th></tr></thead>
+                  <tbody>
+                    <tr><td>004.067.0058606</td><td>紧急</td><td>1.2H</td><td><span class="sbadge g">已入库</span></td></tr>
+                    <tr><td>004.044.0064169</td><td>紧急</td><td>3.8H</td><td><span class="sbadge r">超时</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mon-panel" id="mon-fhi">
+                <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">
+                  <div>
+                    <div class="fhi-score">82</div>
+                    <div class="fhi-label">FHI 工厂健康评分</div>
+                  </div>
+                  <div style="flex:1;font-size:9px;color:#64748b;line-height:1.7">
+                    料备率 × 0.40 + 执行稳健度 × 0.30 + (100 - 异常严重度) × 0.30
+                  </div>
+                </div>
+                <div class="fhi-grid">
+                  <div class="fhi-item"><div class="fhi-item-val">84</div><div class="fhi-item-lbl">料备率</div></div>
+                  <div class="fhi-item"><div class="fhi-item-val">79</div><div class="fhi-item-lbl">执行稳健度</div></div>
+                  <div class="fhi-item"><div class="fhi-item-val" style="color:#d97706">72</div><div class="fhi-item-lbl">异常严重度</div></div>
+                </div>
+                <div style="font-size:9px;color:#64748b;margin-top:6px">TOP3异常：板卡缺料 · 批次延期 · 补料超频</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 项目3：QuadrantTodo -->
+    <div class="proj-card fade-in">
+      <div class="proj-info">
+        <div>
+          <div class="proj-num">03 · 2026</div>
+          <div class="proj-name">QuadrantTodo 四象限待办</div>
+          <div class="proj-desc">
+            macOS 原生桌面应用，基于艾森豪威尔矩阵管理任务。四象限看板 + 日历 + 归档，支持多格式导出，零外部依赖。
+          </div>
+        </div>
+        <div class="proj-tags">
+          <span class="proj-tag">SwiftUI</span>
+          <span class="proj-tag">SwiftData</span>
+          <span class="proj-tag">macOS</span>
+          <span class="proj-tag">桌面应用</span>
+        </div>
+      </div>
+      <div class="proj-preview">
+        <div class="qt-wrap" id="qt-preview">
+          <div class="qt-sidebar">
+            <div class="qt-avatar">Q</div>
+            <div class="qt-icon-btn active" data-pj="qt" data-panel="board" title="待办">⊞</div>
+            <div class="qt-icon-btn" data-pj="qt" data-panel="cal" title="日历">📅</div>
+            <div class="qt-icon-btn" data-pj="qt" data-panel="done" title="已完成">✓</div>
+            <div style="flex:1"></div>
+            <div class="qt-icon-btn" style="font-size:12px">↑</div>
+          </div>
+          <div class="qt-inner">
+            <div class="qt-panel active" id="qt-board">
+              <div class="qt-board">
+                <div class="qt-quadrant">
+                  <div class="qt-q-header">
+                    <div class="qt-dot" style="background:#E85D4A"></div>
+                    <div class="qt-q-title">紧急且重要</div>
+                  </div>
+                  <div class="qt-item" style="border-left-color:#E85D4A">核料 — 明日齐套</div>
+                  <div class="qt-item" style="border-left-color:#E85D4A">处理板卡报警</div>
+                  <div class="qt-item" style="border-left-color:#E85D4A">确认商务插单</div>
+                </div>
+                <div class="qt-quadrant">
+                  <div class="qt-q-header">
+                    <div class="qt-dot" style="background:#F09C3B"></div>
+                    <div class="qt-q-title">重要不紧急</div>
+                  </div>
+                  <div class="qt-item" style="border-left-color:#F09C3B">整理不良仓库存分析</div>
+                  <div class="qt-item" style="border-left-color:#F09C3B">更新排期辅助文档</div>
+                </div>
+                <div class="qt-quadrant">
+                  <div class="qt-q-header">
+                    <div class="qt-dot" style="background:#F5B731"></div>
+                    <div class="qt-q-title">紧急不重要</div>
+                  </div>
+                  <div class="qt-item" style="border-left-color:#F5B731">回复采购询单</div>
+                  <div class="qt-item" style="border-left-color:#F5B731">填写仓储使用率</div>
+                </div>
+                <div class="qt-quadrant">
+                  <div class="qt-q-header">
+                    <div class="qt-dot" style="background:#9AB3BF"></div>
+                    <div class="qt-q-title">不紧急不重要</div>
+                  </div>
+                  <div class="qt-item" style="border-left-color:#9AB3BF">整理历史归档数据</div>
+                </div>
+              </div>
+            </div>
+            <div class="qt-panel" id="qt-cal">
+              <div class="qt-cal" style="height:100%">
+                <div class="qt-cal-title">2026年5月</div>
+                <div class="qt-cal-grid">
+                  <div class="qt-cal-day hd">一</div><div class="qt-cal-day hd">二</div><div class="qt-cal-day hd">三</div><div class="qt-cal-day hd">四</div><div class="qt-cal-day hd">五</div><div class="qt-cal-day hd">六</div><div class="qt-cal-day hd">日</div>
+                  <div class="qt-cal-day"></div><div class="qt-cal-day"></div><div class="qt-cal-day"></div><div class="qt-cal-day has">1</div><div class="qt-cal-day has">2</div><div class="qt-cal-day">3</div><div class="qt-cal-day">4</div>
+                  <div class="qt-cal-day today">5</div><div class="qt-cal-day has">6</div><div class="qt-cal-day has">7</div><div class="qt-cal-day">8</div><div class="qt-cal-day has">9</div><div class="qt-cal-day">10</div><div class="qt-cal-day">11</div>
+                  <div class="qt-cal-day has">12</div><div class="qt-cal-day">13</div><div class="qt-cal-day has">14</div><div class="qt-cal-day">15</div><div class="qt-cal-day">16</div><div class="qt-cal-day">17</div><div class="qt-cal-day">18</div>
+                  <div class="qt-cal-day">19</div><div class="qt-cal-day has">20</div><div class="qt-cal-day">21</div><div class="qt-cal-day">22</div><div class="qt-cal-day">23</div><div class="qt-cal-day">24</div><div class="qt-cal-day">25</div>
+                </div>
+              </div>
+            </div>
+            <div class="qt-panel" id="qt-done">
+              <div class="qt-done-list">
+                <div class="qt-done-item"><span class="qt-done-check">✓</span><span class="qt-done-text">年终盘点组织完成</span><span class="qt-done-date">01/15</span></div>
+                <div class="qt-done-item"><span class="qt-done-check">✓</span><span class="qt-done-text">批量退货系统上线</span><span class="qt-done-date">11/22</span></div>
+                <div class="qt-done-item"><span class="qt-done-check">✓</span><span class="qt-done-text">外仓流程规范化</span><span class="qt-done-date">10/31</span></div>
+                <div class="qt-done-item"><span class="qt-done-check">✓</span><span class="qt-done-text">越南转厂物料接收</span><span class="qt-done-date">09/12</span></div>
+                <div class="qt-done-item"><span class="qt-done-check">✓</span><span class="qt-done-text">IQC及时率达标</span><span class="qt-done-date">08/30</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<div class="chapter-banner"><span class="ch-num">04</span><span class="ch-title">Philosophy</span></div>
+<section id="philosophy" class="fade-in">
+  <span class="deco-ring" style="top:10px;left:20px"></span>
+  <span class="deco-cross" style="top:30px;right:40px"></span>
+  <span class="deco-dot" style="bottom:30px;right:70px"></span>
+  <div class="s-label">My Philosophy</div>
+  <h2 class="s-title" style="margin-bottom:36px">我怎么看待AI？</h2>
+  <div class="phil-grid">
+    <div class="phil-card">
+      <div class="phil-num">01</div>
+      <div class="phil-title">工具应服务于判断</div>
+      <div class="phil-desc">好的工具不替代人的判断，而是把时间还给真正需要判断的事情。重复性劳动自动化，人只做决策。</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-num">02</div>
+      <div class="phil-title">从业务痛点出发</div>
+      <div class="phil-desc">AI赋予了业务快速优化自身工作流和提高工作效率的机会，业务+AI不等于业务+IT。前者的协同效率要大得多。</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-num">03</div>
+      <div class="phil-title">持续迭代，快速验证</div>
+      <div class="phil-desc">没有IT背景的业务也需要持续学习新型的技术，想象力越大，AI的能力越大。而人无法想象出自己没见过的东西。</div>
+    </div>
+  </div>
+</section>
+
+<div class="chapter-banner"><span class="ch-num">05</span><span class="ch-title">Tools &amp; Trends</span></div>
+<section id="tools" class="fade-in">
+  <span class="deco-diamond" style="top:20px;left:30px"></span>
+  <span class="deco-line" style="bottom:40px;right:20px"></span>
+  <span class="deco-dot" style="top:50px;right:50px"></span>
+  <div class="s-label">Tools & Trends</div>
+  <h2 class="s-title" style="margin-bottom:36px">AI 工具与趋势洞察</h2>
+  <div class="tools-section">
+    <div>
+      <div class="tool-group">
+        <div class="tool-group-title">AI 编程工具</div>
+        <div class="tool-list">
+          <span class="tool-pill highlight">Claude Code</span>
+          <span class="tool-pill highlight">Cursor</span>
+          <span class="tool-pill">GitHub Copilot</span>
+          <span class="tool-pill">V0</span>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-group-title">开发框架</div>
+        <div class="tool-list">
+          <span class="tool-pill">React + TypeScript</span>
+          <span class="tool-pill">Python</span>
+          <span class="tool-pill">SwiftUI</span>
+          <span class="tool-pill">Vite</span>
+        </div>
+      </div>
+      <div class="tool-group">
+        <div class="tool-group-title">数据与部署</div>
+        <div class="tool-list">
+          <span class="tool-pill">StarRocks</span>
+          <span class="tool-pill">MCP Protocol</span>
+          <span class="tool-pill">Vercel</span>
+          <span class="tool-pill">Git</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="tool-group-title" style="margin-bottom:18px">趋势理解</div>
+      <div class="trend-item">AI 正在重塑"谁能写代码"的边界——非科班出身的业务人员可以用 Vibe Coding 构建生产级工具。</div>
+      <div class="trend-item">提升AI的能力边界的方式中，会写提示词是第一项，能用MCP、Rules、Hooks是第二项，能使用已经打通了交互的App是第三项。能力边界随着数据流的扩大而扩大。</div>
+      <div class="trend-item">供应链领域的 AI 落地不在于算法先进性，而在于对业务流程的深度理解和数据治理能力。</div>
+      <div class="trend-item">未来的 PMC 不是被 AI 替代，而是用 AI 放大自身的协调与决策能力。</div>
+    </div>
+  </div>
+</section>
+
+<div class="chapter-banner"><span class="ch-num">06</span><span class="ch-title">Skills</span></div>
+<section id="skills" class="fade-in">
+  <span class="deco-ring" style="bottom:20px;right:30px"></span>
+  <span class="deco-cross" style="top:20px;left:40px"></span>
+  <div class="s-label">Skills</div>
+  <h2 class="s-title" style="margin-bottom:32px">能力矩阵</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-num">01</div>
+      <div class="skill-name">供应链管理</div>
+      <div class="skill-items">
+        <div class="skill-item">物料计划与齐套管控</div>
+        <div class="skill-item">库存管理与账务管控</div>
+        <div class="skill-item">生产计划排期（N+1）</div>
+        <div class="skill-item">IQC来料入库管控</div>
+        <div class="skill-item">跨部门协调与谈判</div>
+        <div class="skill-item">滚动预测 / 安全库存模型</div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-num">02</div>
+      <div class="skill-name">AI 工具开发</div>
+      <div class="skill-items">
+        <div class="skill-item">Claude Code / Cursor</div>
+        <div class="skill-item">React + TypeScript</div>
+        <div class="skill-item">Python 数据处理</div>
+        <div class="skill-item">SwiftUI / macOS</div>
+        <div class="skill-item">Vibe Coding 高效交付</div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-num">03</div>
+      <div class="skill-name">数据分析</div>
+      <div class="skill-items">
+        <div class="skill-item">Excel 高阶函数 &amp; 透视表</div>
+        <div class="skill-item">BI 报表数据解读</div>
+        <div class="skill-item">库存结构分析</div>
+        <div class="skill-item">仓储承载测算</div>
+        <div class="skill-item">StarRocks 数仓查询</div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-num">04</div>
+      <div class="skill-name">系统 &amp; 工具</div>
+      <div class="skill-items">
+        <div class="skill-item">EBS 系统</div>
+        <div class="skill-item">APS（需求计划模块）</div>
+        <div class="skill-item">WMS 仓储系统</div>
+        <div class="skill-item">BI 数据看板平台</div>
+        <div class="skill-item">MCP 数仓接入</div>
+        <div class="skill-item">Git / Vercel 部署</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="chapter-banner"><span class="ch-num">07</span><span class="ch-title">Education</span></div>
+<section id="education" class="fade-in">
+  <span class="deco-dot" style="top:25px;right:50px"></span>
+  <span class="deco-diamond" style="bottom:30px;left:20px"></span>
+  <div class="s-label">Education</div>
+  <h2 class="s-title" style="margin-bottom:32px">学术背景</h2>
+  <div class="edu-card">
+    <div>
+      <div class="edu-school">广州大学</div>
+      <div class="edu-major">国际经济与贸易 · 本科</div>
+      <div class="edu-items">
+        <div class="edu-item">主修管理学、会计学、国际商务谈判、国际贸易实务、进出口市场调研，为供应链管理打下理论基础。</div>
+        <div class="edu-item">GPA 3.4，位列专业前20%；大学英语六级。</div>
+        <div class="edu-item">担任班长及团支书、校广播站负责人，荣获<strong style="color:#1a1714">江门市优秀共青团员</strong>、<strong style="color:#1a1714">新会区优秀学生</strong>称号。</div>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:12px;color:var(--muted);white-space:nowrap;letter-spacing:.02em">2020.09 — 2024.07</div>
+    </div>
+  </div>
+</section>
+
+<div class="chapter-banner"><span class="ch-num">08</span><span class="ch-title">Story</span></div>
+<section class="story-section fade-in">
+  <div class="story-card">
+    <span class="deco-ring" style="top:60px;right:40px"></span>
+    <span class="deco-cross" style="bottom:50px;left:30px"></span>
+    <div class="story-date">更新于 2026年5月15日</div>
+    <div class="story-title">关于这个网页的故事</div>
+    <div class="story-body">
+      对于个人简介的网页，我有一个更灵动的设计思路——用即梦生图生视频，用 Claude Code 为前端编程。
+      <br/><br/>
+      但是，很遗憾的是，就在5月15日上午9点16分，Claude Code 在思考了20分钟后，决定用一个"远古"版本的网页直接覆盖了我几乎完工的产品。Claude Code 又因为上下文太长，无法恢复。也怪自己上传 Git 的频率不够。
+      <br/><br/>
+      所以！先上传一个比较原始的个人简介，我的设计会持续更新！
+      <br/><br/>
+      其实我也是第一次做个人简介的网站，很多实现方式都在摸索。越摸索越震惊：AI 居然能帮我实现这个效果，那个效果。越做越兴奋哈哈。
+    </div>
+    <img src="story-screenshot.png" alt="Claude Code 覆盖事故截图" class="story-img"/>
+  </div>
+</section>
+
+<footer>
+  <p>叶梓坤 · PMC &amp; 工具开发者 · 广州</p>
+  <p style="margin-top:6px">Built with Claude Code · Deployed on Vercel</p>
+</footer>
+
+<script>
+// =====================
+// SPLASH SCREEN
+// =====================
+(function(){
+  var splash   = document.getElementById('splash');
+  var content  = document.getElementById('splash-content');
+  var welcomeBtn = document.getElementById('splash-welcome');
+  var mask     = document.getElementById('splash-mask');
+  var letters  = welcomeBtn.querySelectorAll('.wl');
+  var mCtx     = mask.getContext('2d');
+  var resizing = true;
+
+  function initMask(){
+    mask.width  = window.innerWidth;
+    mask.height = window.innerHeight;
+    mCtx.fillStyle = '#000';
+    mCtx.fillRect(0, 0, mask.width, mask.height);
+  }
+  initMask();
+
+  function onResize(){ if(resizing) initMask(); }
+  window.addEventListener('resize', onResize);
+
+  // Lock scroll while splash is active
+  document.body.style.overflow = 'hidden';
+
+  // Entry: blur → clear after first paint
+  requestAnimationFrame(function(){
+    setTimeout(function(){ content.classList.add('splash-visible'); }, 80);
+  });
+
+  // ── Letter hover animation ──
+  var hoverTimers = [];
+  welcomeBtn.addEventListener('mouseenter', function(){
+    hoverTimers.forEach(clearTimeout);
+    hoverTimers = [];
+    letters.forEach(function(l, i){
+      l.classList.remove('rolling');
+      void l.offsetWidth;
+      hoverTimers.push(setTimeout(function(){ l.classList.add('rolling'); }, i * 55));
+    });
+  });
+  welcomeBtn.addEventListener('mouseleave', function(){
+    hoverTimers.forEach(clearTimeout);
+    letters.forEach(function(l){
+      l.classList.remove('rolling');
+      l.style.transform = '';
+    });
+  });
+
+  // ── Click: slide entire splash upward ──
+  welcomeBtn.addEventListener('click', function onClick(){
+    welcomeBtn.removeEventListener('click', onClick);
+    splash.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.6, 1)';
+    splash.style.transform  = 'translateY(-100vh)';
+    setTimeout(function(){
+      splash.remove();
+      document.body.style.overflow = '';
+      window.removeEventListener('resize', onResize);
+    }, 420);
+  });
+
+  // ── Spotlight: reveal 叶梓坤 + dim Kain under mouse ──
+  var nameZh     = document.getElementById('splash-name-zh');
+  var splashName = document.getElementById('splash-name');
+  var spotX = 0, spotY = 0, kainX = 0, kainY = 0;
+  var spotR = 0, targetR = 0;
+  var spotRafId = null;
+
+  splash.addEventListener('mousemove', function(e){
+    var rectZh   = nameZh.getBoundingClientRect();
+    var rectKain = splashName.getBoundingClientRect();
+    spotX = e.clientX - rectZh.left;
+    spotY = e.clientY - rectZh.top;
+    kainX = e.clientX - rectKain.left;
+    kainY = e.clientY - rectKain.top;
+    targetR = 75;
+    if (!spotRafId) spotRafId = requestAnimationFrame(stepSpot);
+  });
+
+  splash.addEventListener('mouseleave', function(){
+    targetR = 0;
+  });
+
+  function stepSpot(){
+    spotR += (targetR - spotR) * 0.16;
+    var r = spotR < 0.5 ? 0 : spotR;
+
+    // 叶梓坤: 鼠标区域显现
+    var revealGrad = 'radial-gradient(circle ' + r.toFixed(1) +
+                     'px at ' + spotX.toFixed(1) + 'px ' + spotY.toFixed(1) +
+                     'px, black 60%, transparent 100%)';
+    nameZh.style.webkitMaskImage = revealGrad;
+    nameZh.style.maskImage       = revealGrad;
+
+    // Kain: 鼠标区域透明度降至20%，区域外完全不透明
+    var dimGrad = 'radial-gradient(circle ' + r.toFixed(1) +
+                  'px at ' + kainX.toFixed(1) + 'px ' + kainY.toFixed(1) +
+                  'px, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 60%, black 100%)';
+    splashName.style.webkitMaskImage = dimGrad;
+    splashName.style.maskImage       = dimGrad;
+
+    if (Math.abs(spotR - targetR) > 0.4){
+      spotRafId = requestAnimationFrame(stepSpot);
+    } else {
+      spotR     = targetR;
+      spotRafId = null;
+    }
+  }
+}());
+
+// ============================================================
+// LEAF PARTICLE ANIMATION
+// ============================================================
+(function () {
+  var canvas = document.getElementById('leaf-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var raf = null;
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth  || canvas.parentElement.offsetWidth;
+    canvas.height = canvas.offsetHeight || canvas.parentElement.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', function () { clearTimeout(resize._t); resize._t = setTimeout(resize, 200); });
+
+  var COLORS = ['#2e5e1e','#3a7228','#4a8835','#527d2e','#6aab4e','#3d6b24','#558b3a'];
+  var COUNT  = 24;
+
+  function Leaf(scatter) {
+    this.reset(scatter);
+  }
+  Leaf.prototype.reset = function (scatter) {
+    var cw = canvas.width, ch = canvas.height;
+    this.x     = cw * (0.42 + Math.random() * 0.58);   // spawn from tree area (right side)
+    this.y     = scatter ? Math.random() * ch : -10 - Math.random() * 60;
+    this.w     = 5  + Math.random() * 9;
+    this.h     = this.w * (0.45 + Math.random() * 0.35);
+    this.vx    = (Math.random() - 0.65) * 0.8;          // slight leftward bias (wind)
+    this.vy    = 0.5 + Math.random() * 1.1;
+    this.rot   = Math.random() * Math.PI * 2;
+    this.rotV  = (Math.random() - 0.5) * 0.045;
+    this.swA   = 14 + Math.random() * 22;                // sway amplitude (px)
+    this.swF   = 0.018 + Math.random() * 0.022;          // sway frequency
+    this.phase = Math.random() * Math.PI * 2;
+    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    this.alpha = 0.5 + Math.random() * 0.45;
+    this.t     = scatter ? Math.random() * 300 : 0;
+  };
+  Leaf.prototype.update = function () {
+    this.t += 1;
+    this.x += this.vx + Math.sin(this.t * this.swF + this.phase) * 0.55;
+    this.y += this.vy + Math.cos(this.t * this.swF * 0.6 + this.phase) * 0.2;
+    this.rot += this.rotV + Math.sin(this.t * this.swF * 0.8) * 0.006;
+    if (this.y > canvas.height + 30 || this.x < -60 || this.x > canvas.width + 60) {
+      this.reset(false);
+    }
+  };
+  Leaf.prototype.draw = function () {
+    var w = this.w, h = this.h;
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rot);
+    ctx.globalAlpha = this.alpha;
+    // Leaf body (pointed-oval bezier)
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.moveTo(0, -h);
+    ctx.bezierCurveTo( w * 0.9, -h * 0.35,  w * 0.85,  h * 0.35,  0,  h);
+    ctx.bezierCurveTo(-w * 0.85,  h * 0.35, -w * 0.9, -h * 0.35,  0, -h);
+    ctx.fill();
+    // Midrib
+    ctx.globalAlpha = this.alpha * 0.45;
+    ctx.strokeStyle = '#1a3a0e';
+    ctx.lineWidth = 0.55;
+    ctx.beginPath();
+    ctx.moveTo(0, -h * 0.85);
+    ctx.quadraticCurveTo(w * 0.12, 0, 0, h * 0.85);
+    ctx.stroke();
+    ctx.restore();
+  };
+
+  var leaves = [];
+  for (var i = 0; i < COUNT; i++) leaves.push(new Leaf(true));
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = 0; i < leaves.length; i++) { leaves[i].update(); leaves[i].draw(); }
+    raf = requestAnimationFrame(tick);
+  }
+
+  // Only animate when hero is on screen
+  var hero = document.getElementById('hero');
+  if (hero && window.IntersectionObserver) {
+    new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { if (!raf) tick(); }
+      else { cancelAnimationFrame(raf); raf = null; }
+    }, { threshold: 0.1 }).observe(hero);
+  } else {
+    tick();
+  }
+}());
+// ============================================================
+// END LEAF ANIMATION
+// ============================================================
+
+// ============================================================
+// HERO: dark nav when hero is in viewport
+// ============================================================
+(function() {
+  var hero = document.getElementById('hero');
+  if (!hero) return;
+  document.body.classList.add('hero-dark');
+  new IntersectionObserver(function(entries) {
+    document.body.classList.toggle('hero-dark', entries[0].isIntersecting);
+  }, { threshold: 0.05 }).observe(hero);
+}());
+
+
+(function(){
+  var parts = ['2473853467','@','qq.com'];
+  var el = document.getElementById('contact-btn');
+  el.href = 'mailto:' + parts.join('');
+  el.addEventListener('click', function(e){
+    e.preventDefault();
+    window.location.href = 'mailto:' + parts.join('');
+  });
+})();
+
+document.addEventListener('click', function(e){
+  var btn = e.target.closest('[data-pj]');
+  if(!btn) return;
+  var pj = btn.dataset.pj;
+  var panel = btn.dataset.panel;
+  if(!panel) return;
+
+  var navSel = pj === 'sched' ? '.sched-nav-item' : pj === 'mon' ? '.mon-nav-item' : '.qt-icon-btn';
+  var wrap = btn.closest('[id$="-preview"]') || btn.closest('.qt-wrap');
+  if(wrap){
+    wrap.querySelectorAll(navSel).forEach(function(n){ n.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  var panelMap = {
+    sched: { sn:'sched-sn', wf:'sched-wf', pp:'sched-pp', ls:'sched-ls', mc:'sched-mc', sv:'sched-sv' },
+    mon:   { promise:'mon-promise', wip:'mon-wip', clear:'mon-clear', iqc:'mon-iqc', fhi:'mon-fhi' },
+    qt:    { board:'qt-board', cal:'qt-cal', done:'qt-done' }
+  };
+  var allPanels = Object.values(panelMap[pj] || {});
+  allPanels.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el){ el.classList.remove('active'); el.style.display='none'; }
+  });
+  var target = panelMap[pj] && panelMap[pj][panel];
+  if(target){
+    var el = document.getElementById(target);
+    if(el){ el.classList.add('active'); el.style.display = (pj==='qt' && panel!=='board') ? 'flex' : 'block'; }
+  }
+
+  var titles = {
+    sn:'筛选新单', wf:'分周回填', pp:'预测规划', ls:'排线模拟', mc:'差异料核对', sv:'排期校验',
+    promise:'订单承诺达成率', wip:'在制周期', clear:'清尾分析', iqc:'检验入库及时率', fhi:'FHI 工厂健康评分'
+  };
+  if(pj==='sched' && document.getElementById('sched-title')){
+    document.getElementById('sched-title').textContent = titles[panel]||panel;
+  }
+  if(pj==='mon' && document.getElementById('mon-title')){
+    document.getElementById('mon-title').textContent = titles[panel]||panel;
+  }
+});
+
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){ entry.target.classList.add('visible'); }
+  });
+},{threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(function(el){ observer.observe(el); });
+
+var sections = document.querySelectorAll('section[id]');
+var navLinks = document.querySelectorAll('.nav-links a');
+var scrollObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      navLinks.forEach(function(l){ l.classList.remove('active'); });
+      var href = '#' + entry.target.id;
+      var active = document.querySelector('.nav-links a[href="' + href + '"]');
+      if(active) active.classList.add('active');
+    }
+  });
+},{threshold:0.35,rootMargin:'-60px 0px 0px 0px'});
+sections.forEach(function(s){ scrollObs.observe(s); });
+
+(function(){
+  ['qt-cal','qt-done'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+  var qb = document.getElementById('qt-board');
+  if(qb) qb.style.display = 'flex';
+})();
+</script>
+</body>
+</html>
